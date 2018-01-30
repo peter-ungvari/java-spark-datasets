@@ -44,8 +44,8 @@ public class JavaDataset<T> {
         return ds.reduce(reducer);
     }
 
-    public <K> KeyValueGroupedDataset<K, T> groupByKey(MapFunction<T, K> mapper, Class<K> clazz) {
-        return ds.groupByKey(mapper, Encoders.bean(clazz));
+    public <K> JavaKeyValueGroupedDataset<K, T> groupByKey(MapFunction<T, K> mapper, Class<K> clazz) {
+        return JavaKeyValueGroupedDataset.of(ds.groupByKey(mapper, Encoders.bean(clazz)));
     }
 
     public <K> JavaKeyValueGroupedDataset<K, T> groupByKey(MapFunction<T, K> mapper, Encoder<K> enc) {
