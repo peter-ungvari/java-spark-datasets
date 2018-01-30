@@ -12,9 +12,8 @@ import java.util.Arrays;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-public class JavaSparkDataSetsTest implements Serializable {
+public class JavaDatasetTest implements Serializable {
 
-    private JavaSparkDataSets jsds = JavaSparkDataSets.getInstance();
     private SparkSession session = SparkSession.builder().master("local[2]").getOrCreate();
 
     @Before
@@ -25,14 +24,14 @@ public class JavaSparkDataSetsTest implements Serializable {
     @Test
     public void testMap1() {
         Dataset<String> ds = session.createDataset(Arrays.asList("foo", "bar", "baz"), Encoders.STRING());
-        Dataset<String> mappedDs = jsds.map(ds, String::toUpperCase, Encoders.STRING());
-        assertArrayEquals(new String[] {"FOO", "BAR", "BAZ"}, (String[])mappedDs.collect());
+        JavaDataset<String> mappedDs = JavaDataset.of(ds).map(String::toUpperCase, Encoders.STRING());
+        assertArrayEquals(new String[] {"FOO", "BAR", "BAZ"}, mappedDs.collect());
     }
 
     @Test
     public void testMap2() {
         Dataset<String> ds = session.createDataset(Arrays.asList("foo", "bar", "baz"), Encoders.STRING());
-        Dataset<Person> mappedDs = jsds.map(ds, Person::new, Person.class);
+        JavaDataset<Person> mappedDs = JavaDataset.of(ds).map(Person::new, Person.class);
         assertEquals("foo", mappedDs.first().getName());
     }
 }
