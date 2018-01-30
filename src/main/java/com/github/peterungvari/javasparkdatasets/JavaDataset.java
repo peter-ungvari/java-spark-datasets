@@ -12,7 +12,6 @@ import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.KeyValueGroupedDataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.storage.StorageLevel;
-import scala.annotation.varargs;
 
 import java.util.Iterator;
 import java.util.List;
