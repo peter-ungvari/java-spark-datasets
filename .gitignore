@@ -1,0 +1,6 @@
+spark-warehouse
+out
+gradle
+.gradle
+.idea
+target
