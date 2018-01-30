@@ -14,6 +14,8 @@ import static org.junit.Assert.assertEquals;
 
 public class JavaDatasetTest implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private SparkSession session = SparkSession.builder().master("local[2]").getOrCreate();
 
     @Before

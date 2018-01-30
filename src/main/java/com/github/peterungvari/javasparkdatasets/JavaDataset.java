@@ -9,7 +9,6 @@ import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoder;
 import org.apache.spark.sql.Encoders;
-import org.apache.spark.sql.KeyValueGroupedDataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.storage.StorageLevel;
 
@@ -120,10 +119,6 @@ public class JavaDataset<T> {
         return ds.as(alias);
     }
 
-    public T[] head(int n) {
-        return (T[]) ds.head(n);
-    }
-
     public T head() {
         return ds.head();
     }
@@ -132,16 +127,8 @@ public class JavaDataset<T> {
         return ds.first();
     }
 
-    public T[] take(int n) {
-        return (T[]) ds.take(n);
-    }
-
     public List<T> takeAsList(int n) {
         return ds.takeAsList(n);
-    }
-
-    public T[] collect() {
-        return (T[]) ds.collect();
     }
 
     public List<T> collectAsList() {
