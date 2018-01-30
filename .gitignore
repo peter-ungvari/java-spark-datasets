@@ -1,7 +1,6 @@
 spark-warehouse
 out
 build
-gradle
 .gradle
 .idea
 target
