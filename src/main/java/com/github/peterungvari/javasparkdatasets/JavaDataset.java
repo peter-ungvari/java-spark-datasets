@@ -51,7 +51,7 @@ public class JavaDataset<T> {
         return JavaKeyValueGroupedDataset.of(ds.groupByKey(mapper, enc));
     }
 
-    public JavaDataset<T> filter(Dataset<T> ds, FilterFunction<T> filter) {
+    public JavaDataset<T> filter(FilterFunction<T> filter) {
         return of(ds.filter(filter));
     }
 
