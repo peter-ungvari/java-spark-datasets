@@ -27,7 +27,7 @@ public class JavaDatasetTest implements Serializable {
     public void testMap1() {
         Dataset<String> ds = session.createDataset(Arrays.asList("foo", "bar", "baz"), Encoders.STRING());
         JavaDataset<String> mappedDs = JavaDataset.of(ds).map(String::toUpperCase, Encoders.STRING());
-        assertArrayEquals(new String[] {"FOO", "BAR", "BAZ"}, mappedDs.collect());
+        assertEquals(Arrays.asList("FOO", "BAR", "BAZ"), mappedDs.collectAsList());
     }
 
     @Test
