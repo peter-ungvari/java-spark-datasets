@@ -1,5 +1,7 @@
 package com.github.peterungvari.javasparkdatasets;
 
+import org.apache.spark.annotation.Experimental;
+import org.apache.spark.annotation.InterfaceStability;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.FilterFunction;
 import org.apache.spark.api.java.function.MapFunction;
@@ -11,6 +13,7 @@ import org.apache.spark.sql.Encoder;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.storage.StorageLevel;
+import scala.Tuple2;
 
 import java.util.Iterator;
 import java.util.List;
@@ -193,5 +196,13 @@ public class JavaDataset<T> {
 
     public void createOrReplaceTempView(String viewName) {
         ds.createOrReplaceTempView(viewName);
+    }
+
+    public <U> JavaDataset<Tuple2<T, U>> joinWith(JavaDataset<U> other, Column condition, String joinType) {
+        return of(ds.joinWith(other.toDataset(), condition, joinType));
+    }
+
+    public <U> JavaDataset<Tuple2<T, U>> joinWith(JavaDataset<U> other, Column condition) {
+        return of(ds.joinWith(other.toDataset(), condition));
     }
 }
