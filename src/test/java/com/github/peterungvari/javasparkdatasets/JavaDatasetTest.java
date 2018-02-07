@@ -42,7 +42,10 @@ public class JavaDatasetTest implements Serializable {
     public void testReduce() {
         Dataset<String> ds = session.createDataset(Arrays.asList("foo", "bar", "baz"), Encoders.STRING());
         String concatenated = JavaDataset.of(ds).reduce(String::concat);
-        assertEquals("foobarbaz", concatenated);
+        assertEquals(9, concatenated.length());
+        assertTrue(concatenated.contains("foo"));
+        assertTrue(concatenated.contains("bar"));
+        assertTrue(concatenated.contains("baz"));
     }
 
     @Test
