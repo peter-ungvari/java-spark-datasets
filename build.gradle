@@ -1,14 +1,13 @@
-group 'com.github.peter-ungvari'
-version '1.0-SNAPSHOT'
-
-sourceCompatibility = 1.8
-
 plugins {
     id 'java'
     id 'maven'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.6.3'
 }
+
+group 'com.github.peter-ungvari'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
 
 tasks.withType(JavaCompile.class, {
     options.compilerArgs = ['-Xlint']
