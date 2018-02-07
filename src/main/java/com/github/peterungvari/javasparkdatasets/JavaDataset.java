@@ -6,12 +6,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.FilterFunction;
 import org.apache.spark.api.java.function.MapFunction;
 import org.apache.spark.api.java.function.ReduceFunction;
-import org.apache.spark.sql.AnalysisException;
-import org.apache.spark.sql.Column;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Encoder;
-import org.apache.spark.sql.Encoders;
-import org.apache.spark.sql.Row;
+import org.apache.spark.sql.*;
 import org.apache.spark.storage.StorageLevel;
 import scala.Tuple2;
 
@@ -24,6 +19,10 @@ public class JavaDataset<T> {
 
     public JavaDataset(Dataset<T> ds) {
         this.ds = ds;
+    }
+
+    public static <T> JavaDataset<T> of(SparkSession session, JavaRDD<T> data, Class<T> clazz) {
+        return of(session.createDataset(data.rdd(), Encoders.bean(clazz)));
     }
 
     public static <T> JavaDataset<T> of(Dataset<T> ds) {
@@ -78,10 +77,6 @@ public class JavaDataset<T> {
         return ds.columns();
     }
 
-    public boolean isLocal() {
-        return ds.isLocal();
-    }
-
     public void show(int numRows) {
         ds.show(numRows);
     }
@@ -102,24 +97,24 @@ public class JavaDataset<T> {
         ds.show(numRows, truncate);
     }
 
-    public Dataset<T> sortWithinPartitions(String sortCol, String... sortCols) {
-        return ds.sortWithinPartitions(sortCol, sortCols);
+    public JavaDataset<T> sortWithinPartitions(String sortCol, String... sortCols) {
+        return of(ds.sortWithinPartitions(sortCol, sortCols));
     }
 
-    public Dataset<T> sort(String sortCol, String... sortCols) {
-        return ds.sort(sortCol, sortCols);
+    public JavaDataset<T> sort(String sortCol, String... sortCols) {
+        return of(ds.sort(sortCol, sortCols));
     }
 
-    public Dataset<T> sort(Column... sortExprs) {
-        return ds.sort(sortExprs);
+    public JavaDataset<T> sort(Column... sortExprs) {
+        return of(ds.sort(sortExprs));
     }
 
     public Column col(String colName) {
         return ds.col(colName);
     }
 
-    public Dataset<T> as(String alias) {
-        return ds.as(alias);
+    public JavaDataset<T> as(String alias) {
+        return of(ds.as(alias));
     }
 
     public T head() {
@@ -138,24 +133,12 @@ public class JavaDataset<T> {
         return ds.collectAsList();
     }
 
-    public Iterator<T> toLocalIterator() {
-        return ds.toLocalIterator();
-    }
-
     public long count() {
         return ds.count();
     }
 
     public JavaDataset<T> repartition(int numPartitions) {
         return of(ds.repartition(numPartitions));
-    }
-
-    public JavaDataset<T> repartition(int numPartitions, Column... partitionExprs) {
-        return of(ds.repartition(numPartitions, partitionExprs));
-    }
-
-    public JavaDataset<T> repartition(Column... partitionExprs) {
-        return of(ds.repartition(partitionExprs));
     }
 
     public JavaDataset<T> coalesce(int numPartitions) {
@@ -188,10 +171,6 @@ public class JavaDataset<T> {
 
     public JavaRDD<T> javaRDD() {
         return ds.javaRDD();
-    }
-
-    public void createTempView(String viewName) throws AnalysisException {
-        ds.createTempView(viewName);
     }
 
     public void createOrReplaceTempView(String viewName) {
