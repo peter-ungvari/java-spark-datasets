@@ -6,8 +6,9 @@
 
 ### Features
 - support for lambdas (Java 8+)
-- method delegates for transformations returning `Dataset<T>`
+- method delegates for transformations returning `Dataset<T>`, where `T` is not `Row`
 - `KeyValueGroupedDataset` support
+- using `Class<?>` parameters instead of `Encoders.bean(clazz)`
 - local maven repository deployment :)
 
 

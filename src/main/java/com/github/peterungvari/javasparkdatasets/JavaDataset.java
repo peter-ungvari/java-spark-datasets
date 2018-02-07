@@ -42,7 +42,7 @@ public class JavaDataset<T> {
         return of(ds.map(mapper, enc));
     }
 
-    public T reduce(Dataset<T> ds, ReduceFunction<T> reducer) {
+    public T reduce(ReduceFunction<T> reducer) {
         return ds.reduce(reducer);
     }
 

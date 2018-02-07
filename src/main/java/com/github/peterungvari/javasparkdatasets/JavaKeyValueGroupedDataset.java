@@ -25,8 +25,7 @@ public class JavaKeyValueGroupedDataset<K, T> {
         return JavaDataset.of(kvgds.mapGroups(groupsMapper, Encoders.bean(clazz)));
     }
 
-    public <U> JavaDataset<U> mapGroups(
-            KeyValueGroupedDataset<K, T> kvgds, MapGroupsFunction<K, T, U> groupsMapper, Encoder<U> enc) {
+    public <U> JavaDataset<U> mapGroups(MapGroupsFunction<K, T, U> groupsMapper, Encoder<U> enc) {
         return JavaDataset.of(kvgds.mapGroups(groupsMapper, enc));
     }
 }
