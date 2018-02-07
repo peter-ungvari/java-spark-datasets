@@ -10,6 +10,18 @@ tasks.withType(JavaCompile.class, {
     options.compilerArgs = ['-Xlint']
 })
 
+plugins {
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
